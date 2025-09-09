@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andidet.AI Eye & Tongue Scanner</title>
+    <script src="https://kit.fontawesome.com/f90068558c.js" crossorigin="anonymous" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <header>
+        <div class="main-header">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Andidet.AI Logo">
+            <h1 class="header-info"> Andidet.AI</h1>
+            <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Secondary Logo">
+        </div>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <div class="box">
+                <br><br><br><br><br><br><br>
+                <h2>Welcome to</h2>
+                <h1>Andidet.AI</h1>
+            </div>
+        </div>
+        <br><br><br>
+
+        <div class="container">
+            <section class="upload-section">
+                <h2>Detect Your Condition!</h2>
+                <h3 style="text-align: center;">Upload an image of your eye conjunctiva or tongue for AI-powered anemia and diabetes detection</h3>
+                <br>
+                <div class="form-container">
+                    <form action="/" method="POST" enctype="multipart/form-data" aria-label="Image upload form">
+                        <!-- Model Selection -->
+                        <div class="model-selection">
+                            <label for="model">Choose AI Model:</label>
+                            <select name="model" id="model" aria-required="true">
+                                <option value="null" disabled selected>Choose a model</option>
+                                <option value="anedet">Anedet.AI👀</option>
+                                <option value="diadet">Diadet.AI👅</option>
+                            </select>
+                        </div>
+
+                        <section class="tutorial">
+                            <h2>📝 How It Works</h2>
+                            <div id="tutorial-steps">
+                                <p>Choose an AI model to see tutorial steps.</p>
+                            </div>
+                        </section>
+
+                        <!-- File Upload -->
+                        <div class="upload-area">
+                            <label for="input-file" id="drop-area" aria-label="Image upload area">
+                                <input type="file" name="imagefile" accept="image/jpeg,image/png,image/heic,image/heif,image/webp" id="input-file" hidden aria-required="true">
+
+                                <div id="img-view">
+                                    <i class="fas fa-cloud-upload-alt upload-icon" aria-hidden="true"></i>
+                                    <p id="upload-instruction" class="upload-text">Click, tap, or drag & drop an image to upload!</p>
+                                    <p class="upload-subtext">Supported formats: JPG, PNG, or HEIC</p>
+                                </div>
+                            </label>
+                            <div id="upload-feedback" role="alert"></div>
+                            <img id="preview-img" src="#" alt="Image preview" style="display: none;" loading="lazy">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="detect-btn" aria-label="Analyze uploaded image">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                            Detect
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <section class="results">
+                <h2>Results</h2>
+                <div class="results-container">
+                    {% if prediction %}
+                        <div class="result-card" role="region" aria-label="Analysis results">
+                            <div class="result-header">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                <h3>Analysis Complete</h3>
+                            </div>
+                            <div class="result-details">
+                                <div class="result-item">
+                                    <span class="label">Prognosis:</span>
+                                    <h1 id="prognosis-text" class="value prediction">{{ prediction }}</h1>
+                                </div>
+                                <div class="result-item">
+                                    <span class="label">Confidence:</span>
+                                    <h1 class="value confidence">{{ percent }}%</h1>
+                                </div>
+                                <div class="result-item">
+                                    <span class="label">Model Used:</span>
+                                    <span class="value model">{{ model_used|capitalize }}.AI</span>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if medical %}
+                    <h3>{{ model_used|capitalize }}.AI may think that you're {{ prediction }} because of :</h3>
+                    <ul>
+                        {% for item in medical %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                    <br>
+                    {% endif %}
+
+                    {% if image_file %}
+                        <div class="uploaded-image-section">
+                            <div class="success-message">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                Image uploaded successfully!
+                            </div>
+                            <div class="image-container">
+                                <h4>Your uploaded image:</h4>
+                                <img src="{{ url_for('display_image', filename=image_file) }}"
+                                     alt="Uploaded image for analysis"
+                                     class="uploaded-image" loading="lazy">
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if error %}
+                        <div class="error-message" role="alert">
+                            <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                            {{ error }}
+                        </div>
+                    {% endif %}
+
+                    {% if not prediction and not image_file and not error %}
+                        <div class="no-results">
+                            <i class="fas fa-info-circle" aria-hidden="true"></i>
+                            <p>Upload an image and click "Detect" to see results here.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Andidet.AI - Anemia and Diabetes Detector, All rights reserved</p>
+            <p>Made with ❤️ by genius freaks at SMAN 3 Denpasar and CABCODE.id</p>
+            <br>
+            <div style="text-align: center;">
+                <a href="https://cabcode.id">
+                    <img src="{{ url_for('static', filename='images/cabcode.png') }}" alt="cabcode.id Logo" style="width: 20%; height: auto;">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Close alert function
+        function closeAlert(alertId) {
+            document.getElementById(alertId).style.display = 'none';
+        }
+
+        // Show disease-specific alert based on detection result
+        function showDiseaseAlert(disease) {
+            const alertId = disease.toLowerCase() === 'anemia' ? 'anemia-alert-container' : 'diabetes-alert-container';
+            setTimeout(function() {
+                document.getElementById(alertId).style.display = 'flex';
+                document.getElementById(alertId).querySelector('.medical-alert').classList.add('show');
+            }, 1500); // Show alert 1.5 seconds after detection
+        }
+
+        // Check for detection results on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const prognosisElement = document.getElementById('prognosis-text');
+            // Only show alert if there's actually a detection result AND it shows a disease
+            if (prognosisElement && prognosisElement.textContent.trim()) {
+                const detectedDisease = prognosisElement.textContent.trim().toLowerCase();
+                if (detectedDisease === 'anemia' || detectedDisease === 'diabetes') {
+                    showDiseaseAlert(detectedDisease);
+                }
+            }
+        });
+
+        // Model change handler
+        document.getElementById('model').addEventListener('change', function(event) {
+            const selectedModel = event.target.value;
+            const tutorialSteps = document.getElementById('tutorial-steps');
+            const uploadInstruction = document.getElementById('upload-instruction');
+
+            if (selectedModel === 'anedet') {
+                tutorialSteps.innerHTML = `
+                    <ol>
+                        <li>Take a picture of your eye conjunctiva.</li>
+                        <li>Upload the conjunctiva image below.</li>
+                        <li>Press the "Detect" button.</li>
+                        <li>Wait for AI to process.</li>
+                        <li>The result will appear above the conjunctiva image.</li>
+                    </ol>
+                `;
+                uploadInstruction.textContent = 'Click, tap, or drag & drop your conjunctiva image to upload!';
+            } else if (selectedModel === 'diadet') {
+                tutorialSteps.innerHTML = `
+                    <ol>
+                        <li>Take a picture of your tongue.</li>
+                        <li>Upload the tongue image below.</li>
+                        <li>Press the "Detect" button.</li>
+                        <li>Wait for AI to process.</li>
+                        <li>The result will appear above the tongue image.</li>
+                    </ol>
+                `;
+                uploadInstruction.textContent = 'Click, tap, or drag & drop your tongue photo to upload!';
+            } else {
+                tutorialSteps.innerHTML = '<p>Choose an AI model to see tutorial steps.</p>';
+                uploadInstruction.textContent = 'Click, tap, or drag & drop an image to upload!';
+            }
+        });
+
+        // Image upload preview and feedback
+        document.getElementById('input-file').addEventListener('change', function(event) {
+            const feedback = document.getElementById('upload-feedback');
+            const preview = document.getElementById('preview-img');
+            const imgView = document.getElementById('img-view');
+            const file = event.target.files[0];
+
+            if (file) {
+                const ext = file.name.split('.').pop().toLowerCase();
+                if (ext === "heic" || ext === "heif") {
+                    feedback.textContent = 'HEIC file selected! Preview not supported, will be converted after upload.';
+                    feedback.className = 'upload-success';
+                    preview.style.display = 'none';
+                    imgView.style.display = 'none';
+                } else {
+                    feedback.textContent = 'Image selected successfully!';
+                    feedback.className = 'upload-success';
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+                        preview.style.display = 'block';
+                        imgView.style.display = 'none';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                feedback.textContent = '';
+                feedback.className = '';
+                preview.style.display = 'none';
+                imgView.style.display = 'block';
+            }
+        });
+
+        // Drag and drop functionality
+        const dropArea = document.getElementById('drop-area');
+        const imgView = document.getElementById('img-view');
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => imgView.classList.add('drag-over'), false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, () => imgView.classList.remove('drag-over'), false);
+        });
+
+        dropArea.addEventListener('drop', function(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            const fileInput = document.getElementById('input-file');
+            fileInput.files = files;
+            fileInput.dispatchEvent(new Event('change'));
+        });
+
+        // Prognosis styling
+        document.addEventListener('DOMContentLoaded', function() {
+            const prognosis = document.getElementById('prognosis-text');
+            if (prognosis) {
+                const text = prognosis.textContent.trim().toLowerCase();
+                prognosis.classList.toggle('prognosis-bad', text === 'diabetes' || text === 'anemia');
+                prognosis.classList.toggle('prognosis-good', text !== 'diabetes' && text !== 'anemia');
+            }
+        });
+
+        // Smooth scroll to results
+        document.addEventListener('DOMContentLoaded', function() {
+            const resultsSection = document.querySelector('.results');
+            const hasResults = document.querySelector('.result-card') || 
+                            document.querySelector('.uploaded-image-section') || 
+                            document.querySelector('.error-message');
+            
+            if (hasResults && resultsSection) {
+                setTimeout(() => {
+                    resultsSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>

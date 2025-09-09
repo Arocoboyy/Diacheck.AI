@@ -1,0 +1,455 @@
+/* Reset & Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #4a4da2;
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* Header */
+header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #ccd7e3;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 1rem;
+}
+
+.main-header img {
+    width: clamp(40px, 6vw, 60px);
+    height: clamp(40px, 6vw, 60px);
+}
+
+.header-info {
+    color: #2962ff;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Main Content */
+main {
+    margin: 0;
+}
+
+/* Jumbotron - UPDATED */
+.jumbotron {
+    text-align: center;
+    background-image: url('../images/jumbotron.jpeg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-color: #4a4da2;
+    position: relative;
+    min-height: 80vh;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Keep centered to maintain layout */
+    align-items: center;
+    top: 0;
+    margin: 0;
+    padding: 1rem;
+    padding-bottom: 2rem;
+}
+
+.jumbotron::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(74, 77, 162, 0.39);
+    z-index: 1;
+}
+
+.jumbotron > * {
+    position: relative;
+    z-index: 2;
+}
+
+.jumbotron h2 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 400;
+    margin-bottom: 0; /* Keep tight spacing with Andidet.AI */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: whitesmoke;
+    margin-top: 4; /* Keep 4rem for default desktop */
+}
+
+.box h1 {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 800;
+    color: white;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Container */
+.container {
+    background-color: rgba(204, 215, 227, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin: -100px auto 2rem;
+    max-width: 1000px;
+    width: 95%;
+    padding: clamp(1.5rem, 4vw, 2rem);
+    position: relative;
+    z-index: 3;
+}
+
+/* Sections */
+.tutorial, .upload-section, .results {
+    padding: clamp(1rem, 3vw, 2rem);
+}
+
+.results {
+    border-bottom: none;
+}
+
+.tutorial h2, .upload-section h2, .results h2 {
+    color: #2962ff;
+    font-size: clamp(1.3rem, 3.5vw, 2rem);
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+/* Tutorial Steps */
+.tutorial ol {
+    max-width: 600px;
+    margin: 0 auto;
+    padding-left: 1.5rem;
+}
+
+.tutorial li {
+    margin-bottom: 1rem;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+}
+
+.tutorial p {
+    text-align: center;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: #555;
+}
+
+/* Form Container */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Model Selection */
+.model-selection {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.model-selection label {
+    display: block;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.model-selection select {
+    width: 100%;
+    max-width: 300px;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+}
+
+.model-selection select:focus {
+    outline: none;
+    border-color: #2962ff;
+}
+
+/* Upload Area */
+.upload-area {
+    margin-bottom: 1.5rem;
+}
+
+#drop-area {
+    display: block;
+    cursor: pointer;
+}
+
+#img-view {
+    border: 3px dashed #ccc;
+    border-radius: 12px;
+    padding: clamp(1.5rem, 4vw, 2rem);
+    background: white;
+    text-align: center;
+}
+
+#img-view.drag-over {
+    border-color: #2962ff;
+}
+
+#img-view img, .upload-icon {
+    font-size: 2rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+}
+
+#img-view p {
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    color: #555;
+}
+
+/* Upload Feedback */
+#upload-feedback {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.upload-success {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+/* Preview Image */
+#preview-img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+/* Detect Button */
+.detect-btn {
+    background-color: #4a4d98;
+    color: white;
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+    border: none;
+    border-radius: 10px;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 600;
+    cursor: pointer;
+    display: block;
+    margin: 1rem auto;
+    min-width: 150px;
+}
+
+.detect-btn:hover {
+    background-color: #3949ab;
+}
+
+/* Results Container */
+.results-container {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.result-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #4caf50;
+}
+
+.result-card h3 {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.result-details p {
+    margin-bottom: 0.8rem;
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+.result-details strong {
+    color: #2962ff;
+}
+
+/* Uploaded Image Section */
+.uploaded-image-section {
+    margin-bottom: 1.5rem;
+}
+
+.success-message {
+    background-color: #e8f5e8;
+    color: #2e7d32;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #c8e6c9;
+}
+
+.image-container h4 {
+    color: #333;
+    margin-bottom: 1rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+.uploaded-image {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 12px;
+    border: 2px solid #f0f0f0;
+}
+
+/* Error Message */
+.error-message {
+    background-color: #ffebee;
+    color: #c62828;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #ffcdd2;
+}
+
+/* No Results */
+.no-results {
+    text-align: center;
+    padding: 2rem;
+    color: #777;
+}
+
+.no-results p {
+    font-size: clamp(0.9rem, 2.5vw, 1rem);
+}
+
+/* Footer */
+footer {
+    background-color: rgba(41, 98, 255, 0.1);
+    margin-top: 2rem;
+    padding: 1.5rem;
+}
+
+.footer-content p {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+/* Prognosis Styling */
+.prognosis-good {
+    color: #1e9e55;
+    background: #e6f9ef;
+    border: 2px solid #1e9e55;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.prognosis-bad {
+    color: #d62828;
+    background: #fdeaea;
+    border: 2px solid #d62828;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        width: 90%;
+        padding: clamp(1rem, 3vw, 1.5rem);
+    }
+
+    .jumbotron {
+        min-height: 50vh;
+        max-height: 500px;
+        padding-bottom: 1.5rem;
+        justify-content: center;
+    }
+
+    .jumbotron h2 {
+        margin-top: 3.5rem; /* Added to lower "Welcome to" text for 1200px viewport */
+        margin-bottom: 0.2rem; /* Keep tight spacing */
+    }
+}
+
+@media (max-width: 768px) {
+    .jumbotron {
+        min-height: 42vh;
+        max-height: 400px;
+        background-attachment: scroll;
+        padding: 1rem;
+        padding-bottom: 1.2rem;
+        justify-content: center;
+    }
+
+    .jumbotron h2 {
+        margin-top: 2.5rem; /* Increased from 2rem to 2.5rem for medium screens */
+        margin-bottom: 0.1rem; /* Keep tight spacing */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 98%;
+        margin: -30px auto 1rem;
+        padding: clamp(0.5rem, 2vw, 0.8rem);
+        border-radius: 8px;
+    }
+
+    .jumbotron {
+        min-height: 35vh;
+        max-height: 300px;
+        padding: 0.5rem;
+        padding-bottom: 1rem;
+        justify-content: center;
+    }
+
+    .jumbotron h2 {
+        margin-top: 2rem; /* Increased from 1.5rem to 2rem for 360px and smaller screens */
+        margin-bottom: 0.1rem; /* Tight spacing for small screens */
+        font-size: clamp(1rem, 4vw, 1.4rem);
+    }
+
+    .box h1 {
+        font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+
+    .tutorial, .upload-section, .results {
+        padding: clamp(0.5rem, 2vw, 0.8rem);
+    }
+
+    #img-view, .result-card {
+        padding: clamp(0.5rem, 2vw, 0.8rem);
+    }
+}
+
+@media (min-width: 1920px) {
+    .jumbotron {
+        min-height: 55vh;
+        max-height: 550px;
+        background-size: cover;
+        padding-bottom: 3rem;
+    }
+
+    .jumbotron h2 {
+        margin-top: 4.5rem; /* Increased to 4.5rem for largest screens to lower text further */
+        margin-bottom: 0.2rem; /* Consistent tight spacing */
+    }
+}
