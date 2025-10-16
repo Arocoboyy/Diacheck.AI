@@ -18,7 +18,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 # ===============================
 # Load Dua Model
 # ===============================
-models = YOLO("best100.pt")
+models = YOLO("best.pt")
 
 # ===============================
 # Fungsi bantu: cek ekstensi
