@@ -3,18 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andidet.AI Eye & Tongue Scanner</title>
+    <title>Diacheck.AI Tongue Scanner</title>
     <script src="https://kit.fontawesome.com/f90068558c.js" crossorigin="anonymous" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <header>
         <div class="main-header">
-            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Andidet.AI Logo">
-            <h1 class="header-info"> Andidet.AI</h1>
+            <h1 class="header-info"> Diacheck.AI</h1>
             <img src="{{ url_for('static', filename='images/logo1.png') }}" alt="Secondary Logo">
         </div>
     </header>
@@ -24,7 +23,7 @@
             <div class="box">
                 <br><br><br><br><br><br><br>
                 <h2>Welcome to</h2>
-                <h1>Andidet.AI</h1>
+                <h1>Diacheck.AI</h1>
             </div>
         </div>
         <br><br><br>
@@ -32,24 +31,21 @@
         <div class="container">
             <section class="upload-section">
                 <h2>Detect Your Condition!</h2>
-                <h3 style="text-align: center;">Upload an image of your eye conjunctiva or tongue for AI-powered anemia and diabetes detection</h3>
+                <h3 style="text-align: center;">Upload an image of your tongue for AI-powered diabetes detection</h3>
                 <br>
                 <div class="form-container">
                     <form action="/" method="POST" enctype="multipart/form-data" aria-label="Image upload form">
-                        <!-- Model Selection -->
-                        <div class="model-selection">
-                            <label for="model">Choose AI Model:</label>
-                            <select name="model" id="model" aria-required="true">
-                                <option value="null" disabled selected>Choose a model</option>
-                                <option value="anedet">Anedet.AI👀</option>
-                                <option value="diadet">Diadet.AI👅</option>
-                            </select>
-                        </div>
 
                         <section class="tutorial">
                             <h2>📝 How It Works</h2>
                             <div id="tutorial-steps">
-                                <p>Choose an AI model to see tutorial steps.</p>
+                                <ol>
+                                    <li>Take a picture of your tongue.</li>
+                                    <li>Upload the tongue image below.</li>
+                                    <li>Press the "Detect" button.</li>
+                                    <li>Wait for AI to process.</li>
+                                    <li>The result will appear above the tongue image.</li>
+                                </ol>
                             </div>
                         </section>
 
@@ -95,26 +91,11 @@
                                     <span class="label">Confidence:</span>
                                     <h1 class="value confidence">{{ percent }}%</h1>
                                 </div>
-                                <div class="result-item">
-                                    <span class="label">Model Used:</span>
-                                    <span class="value model">{{ model_used|capitalize }}.AI</span>
-                                </div>
                                 <br>
                             </div>
                         </div>
-                    {% endif %}
 
-                    {% if medical %}
-                    <h3>{{ model_used|capitalize }}.AI may think that you're {{ prediction }} because of :</h3>
-                    <ul>
-                        {% for item in medical %}
-                        <li>{{ item }}</li>
-                        {% endfor %}
-                    </ul>
-                    <br>
-                    {% endif %}
-
-                    {% if image_file %}
+                        {% if image_file %}
                         <div class="uploaded-image-section">
                             <div class="success-message">
                                 <i class="fas fa-check-circle" aria-hidden="true"></i>
@@ -127,16 +108,15 @@
                                      class="uploaded-image" loading="lazy">
                             </div>
                         </div>
-                    {% endif %}
+                        {% endif %}
 
-                    {% if error %}
+                    {% elif error %}
                         <div class="error-message" role="alert">
                             <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
                             {{ error }}
                         </div>
-                    {% endif %}
 
-                    {% if not prediction and not image_file and not error %}
+                    {% else %}
                         <div class="no-results">
                             <i class="fas fa-info-circle" aria-hidden="true"></i>
                             <p>Upload an image and click "Detect" to see results here.</p>
@@ -146,17 +126,12 @@
             </section>
         </div>
     </main>
-
+<hr>
     <footer>
         <div class="footer-content">
             <p>&copy; 2025 Andidet.AI - Anemia and Diabetes Detector, All rights reserved</p>
-            <p>Made with ❤️ by genius freaks at SMAN 3 Denpasar and CABCODE.id</p>
+            <p>Made with ❤️ by genius freaks at SMAN 3 Denpasar</p>
             <br>
-            <div style="text-align: center;">
-                <a href="https://cabcode.id">
-                    <img src="{{ url_for('static', filename='images/cabcode.png') }}" alt="cabcode.id Logo" style="width: 20%; height: auto;">
-                </a>
-            </div>
         </div>
     </footer>
 
@@ -187,39 +162,6 @@
             }
         });
 
-        // Model change handler
-        document.getElementById('model').addEventListener('change', function(event) {
-            const selectedModel = event.target.value;
-            const tutorialSteps = document.getElementById('tutorial-steps');
-            const uploadInstruction = document.getElementById('upload-instruction');
-
-            if (selectedModel === 'anedet') {
-                tutorialSteps.innerHTML = `
-                    <ol>
-                        <li>Take a picture of your eye conjunctiva.</li>
-                        <li>Upload the conjunctiva image below.</li>
-                        <li>Press the "Detect" button.</li>
-                        <li>Wait for AI to process.</li>
-                        <li>The result will appear above the conjunctiva image.</li>
-                    </ol>
-                `;
-                uploadInstruction.textContent = 'Click, tap, or drag & drop your conjunctiva image to upload!';
-            } else if (selectedModel === 'diadet') {
-                tutorialSteps.innerHTML = `
-                    <ol>
-                        <li>Take a picture of your tongue.</li>
-                        <li>Upload the tongue image below.</li>
-                        <li>Press the "Detect" button.</li>
-                        <li>Wait for AI to process.</li>
-                        <li>The result will appear above the tongue image.</li>
-                    </ol>
-                `;
-                uploadInstruction.textContent = 'Click, tap, or drag & drop your tongue photo to upload!';
-            } else {
-                tutorialSteps.innerHTML = '<p>Choose an AI model to see tutorial steps.</p>';
-                uploadInstruction.textContent = 'Click, tap, or drag & drop an image to upload!';
-            }
-        });
 
         // Image upload preview and feedback
         document.getElementById('input-file').addEventListener('change', function(event) {
