@@ -1,7 +1,7 @@
 flask==3.0.3
 ultralytics==8.3.32
-torch==2.0.1+cpu
-torchvision==0.15.2+cpu
+torch==2.1.0
+torchvision==0.16.0
 opencv-python-headless==4.10.0.84
 pillow==10.2.0
 pillow-heif==0.14.0
